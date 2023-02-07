@@ -37,7 +37,6 @@ const signup = (req, res) => {
       });
   });
 };
-
 const login = (req, res) => {
   const { username, password } = req.body;
   if (!req.body.username || !req.body.password) {
@@ -80,5 +79,33 @@ const login = (req, res) => {
       res.send(err);
     });
 };
+const deleteUser = (req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then((deleteUser) => {
+      res.send(deleteUser);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+const getUserInfo = (req, res) => {
+  const payloadId = req.payload._id;
+  User.findById(payloadId)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+const editUser = (req, res) => {
+  User.findByIdAndUpdate(req.payload._id, req.body, { new: true })
+    .then((updatedUser) => {
+      res.send({ updatedUser });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
 
-module.exports = { signup, login };
+module.exports = { signup, login, deleteUser, getUserInfo, editUser };
