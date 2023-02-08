@@ -7,6 +7,9 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  bio: {
+    type: String,
+  },
   profileImage: {
     type: String,
   },
@@ -18,8 +21,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-  }
-})
+  },
+});
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

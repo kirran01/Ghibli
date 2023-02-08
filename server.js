@@ -3,19 +3,19 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const authRouter=require('./routes/auth.routes');
-const commentRouter=require('./routes/comment.routes')
+const authRouter = require("./routes/auth.routes");
+const commentRouter = require("./routes/comment.routes");
+const favRouter = require("./routes/fav.routes");
 
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(
-    cors()
-  )
+app.use(cors());
 
 app.use(express.json());
-app.use("/auth", authRouter)
-app.use('/comments',commentRouter)
+app.use("/auth", authRouter);
+app.use("/comments", commentRouter);
+app.use("/favorites", favRouter);
 
 app.get("/", (req, res) => {
   res.send("Ghibli server up");
@@ -27,8 +27,8 @@ mongoose
     console.log("//////////////// Ghibli /////////////");
     console.log("connected to --->", res.connections[0].name);
     app.listen(PORT, () => {
-        console.log("Ghibli backend up on-->", +PORT);
-      });
+      console.log("Ghibli backend up on-->", +PORT);
+    });
   })
   .catch((err) => {
     console.log(err, "err - server");
