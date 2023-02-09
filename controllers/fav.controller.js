@@ -1,14 +1,20 @@
 const Favorite = require("../models/Favorite.model");
 
 const createFavorite = (req, res) => {
-  const { image, title, showId, original_title } = req.body;
-  Favorite.create({
-    image,
-    title,
-    showId,
-    original_title,
-    owner: req.payload._id,
-  })
+  Favorite.findOne({ showId: req.params.id, owner: req.payload._id })
+    .then((foundShow) => {
+      if (foundShow) {
+        return Promise.reject("Already favorited");
+      }
+      const { image, title, showId, original_title } = req.body;
+      return Favorite.create({
+        image,
+        title,
+        showId,
+        original_title,
+        owner: req.payload._id,
+      });
+    })
     .then((createdFav) => {
       res.send(createdFav);
     })

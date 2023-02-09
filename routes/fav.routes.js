@@ -8,7 +8,7 @@ const {
 
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-router.post("/create-favorite", isAuthenticated, createFavorite);
+router.post("/create-favorite/:id", isAuthenticated, createFavorite);
 router.delete("/delete-favorite/:id", isAuthenticated, deleteFavorite);
 router.get("/get-favorites", getFavorites);
 
