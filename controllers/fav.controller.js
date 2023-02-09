@@ -1,12 +1,12 @@
 const Favorite = require("../models/Favorite.model");
 
 const createFavorite = (req, res) => {
-  const { image, title, showId, originalTitle } = req.body;
+  const { image, title, showId, original_title } = req.body;
   Favorite.create({
     image,
     title,
     showId,
-    originalTitle,
+    original_title,
     owner: req.payload._id,
   })
     .then((createdFav) => {

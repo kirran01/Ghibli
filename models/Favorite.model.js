@@ -10,7 +10,7 @@ const favoriteSchema = new Schema({
   image: String,
   title: String,
   showId: String,
-  originalTitle: String,
+  original_title: String,
 });
 
 const Favorite = mongoose.model("Favorite", favoriteSchema);

@@ -17,6 +17,7 @@ const createComment = (req, res) => {
 };
 const getComments = (req, res) => {
   Comment.find()
+  .populate('owner')
     .then((foundComments) => {
       res.send(foundComments);
     })
