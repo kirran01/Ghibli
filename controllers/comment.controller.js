@@ -17,7 +17,7 @@ const createComment = (req, res) => {
 };
 const getComments = (req, res) => {
   Comment.find()
-  .populate('owner')
+    .populate("owner")
     .then((foundComments) => {
       res.send(foundComments);
     })
@@ -36,10 +36,14 @@ const deleteComment = (req, res) => {
 };
 const editComment = (req, res) => {
   const { comment, day } = req.body;
-  Comment.findByIdAndUpdate(req.params.id, {
-    comment,
-    day: Date.now(),
-  })
+  Comment.findByIdAndUpdate(
+    req.params.id,
+    {
+      comment,
+      day: Date.now(),
+    },
+    { new: true }
+  )
     .then((editedComment) => {
       res.send(editedComment);
     })
