@@ -8,6 +8,7 @@ const createComment = (req, res) => {
     postId,
     owner: req.payload._id,
   })
+    .populate("owner")
     .then((createdComment) => {
       res.send(createdComment);
     })
@@ -44,6 +45,7 @@ const editComment = (req, res) => {
     },
     { new: true }
   )
+    .populate("owner")
     .then((editedComment) => {
       res.send(editedComment);
     })

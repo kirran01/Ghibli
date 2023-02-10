@@ -15,6 +15,7 @@ const createFavorite = (req, res) => {
         owner: req.payload._id,
       });
     })
+    .populate('owner')
     .then((createdFav) => {
       res.send(createdFav);
     })
