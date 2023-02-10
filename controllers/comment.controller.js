@@ -8,9 +8,11 @@ const createComment = (req, res) => {
     postId,
     owner: req.payload._id,
   })
-    .populate("owner")
     .then((createdComment) => {
-      res.send(createdComment);
+      return Comment.findById(createdComment._id).populate("owner");
+    })
+    .then((populatedComment) => {
+      res.send(populatedComment);
     })
     .catch((err) => {
       res.send(err);
