@@ -1,4 +1,5 @@
 const Comment = require("../models/Comment.model");
+const { castObject } = require("../models/User.model");
 
 const createComment = (req, res) => {
   const { day, comment, owner, postId } = req.body;
@@ -28,15 +29,22 @@ const getComments = (req, res) => {
       res.send(err);
     });
 };
-const deleteComment = (req, res) => {
-  Comment.findByIdAndDelete(req.params.id)
-    .then((deleteComment) => {
-      res.send(deleteComment);
-    })
-    .catch((err) => {
-      res.send(err);
+const deleteComment = async (req, res) => {
+  try {
+    const deleteComment = await Comment.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.payload._id,
     });
+    if (deleteComment) {
+      res.send(deleteComment);
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    res.send(err);
+  }
 };
+
 const editComment = (req, res) => {
   const { comment, day } = req.body;
   Comment.findByIdAndUpdate(
