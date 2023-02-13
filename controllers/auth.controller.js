@@ -107,5 +107,17 @@ const editUser = (req, res) => {
       res.send(err);
     });
 };
+const getAnotherUser = async (req, res) => {
+  try {
+    const otherUser = await User.findById(req.params.id);
+    if (otherUser) {
+      res.send(otherUser);
+    } else {
+      res.send("no user");
+    }
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-module.exports = { signup, login, deleteUser, getUserInfo, editUser };
+module.exports = { signup, login, deleteUser, getUserInfo, editUser,getAnotherUser };

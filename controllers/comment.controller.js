@@ -44,7 +44,6 @@ const deleteComment = async (req, res) => {
     res.send(err);
   }
 };
-
 const editComment = (req, res) => {
   const { comment, day } = req.body;
   Comment.findByIdAndUpdate(
