@@ -1,6 +1,7 @@
 const User = require("../models/User.model");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Comment = require("../models/Comment.model");
 
 const signup = (req, res) => {
   const { email, password, username, profileImage } = req.body;
@@ -79,15 +80,28 @@ const login = (req, res) => {
       res.send(err);
     });
 };
-const deleteUser = (req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then((deleteUser) => {
-      res.send(deleteUser);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+const deleteUser = async (req, res) => {
+  try {
+    const userToDel = await User.findByIdAndDelete(req.params.id);
+    if (userToDel) {
+      await Comment.deleteMany({ owner: req.params.id });
+      res.send(userToDel);
+    }
+  } catch (err) {
+    res.send(err);
+  }
 };
+
+// const deleteUser = (req, res) => {
+//   User.findByIdAndDelete(req.params.id)
+//     .then((deleteUser) => {
+//       res.send(deleteUser);
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
+// };
+
 const getUserInfo = (req, res) => {
   const payloadId = req.payload._id;
   User.findById(payloadId)
@@ -120,4 +134,11 @@ const getAnotherUser = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, deleteUser, getUserInfo, editUser,getAnotherUser };
+module.exports = {
+  signup,
+  login,
+  deleteUser,
+  getUserInfo,
+  editUser,
+  getAnotherUser,
+};
