@@ -12,7 +12,7 @@ const signup = (req, res) => {
   }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(email)) {
-    res.status(400).json({ message: "Provide a valid email address." });
+    res.status(400).json({ message: "Please provide a valid email address." });
     return;
   }
   const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
@@ -91,17 +91,6 @@ const deleteUser = async (req, res) => {
     res.send(err);
   }
 };
-
-// const deleteUser = (req, res) => {
-//   User.findByIdAndDelete(req.params.id)
-//     .then((deleteUser) => {
-//       res.send(deleteUser);
-//     })
-//     .catch((err) => {
-//       res.send(err);
-//     });
-// };
-
 const getUserInfo = (req, res) => {
   const payloadId = req.payload._id;
   User.findById(payloadId)
